@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <RootNamespace>ForthEditor</RootNamespace>
+    <AssemblyName>ForthEditor</AssemblyName>
+    <NoWarn>$(NoWarn);WFO1000</NoWarn>
+    <ApplicationIcon>ico1.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Nécessaire pour System.IO.Ports (SerialPort) sur .NET moderne -->
+    <PackageReference Include="System.IO.Ports" Version="9.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="MainForm.Designer.cs"><DependentUpon>MainForm.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="MainForm.resx"><DependentUpon>MainForm.cs</DependentUpon></EmbeddedResource>
+    <Compile Update="FindReplaceForm.Designer.cs"><DependentUpon>FindReplaceForm.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="FindReplaceForm.resx"><DependentUpon>FindReplaceForm.cs</DependentUpon></EmbeddedResource>
+    <Compile Update="PromptForm.Designer.cs"><DependentUpon>PromptForm.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="PromptForm.resx"><DependentUpon>PromptForm.cs</DependentUpon></EmbeddedResource>
+    <Compile Update="TerminalSettingsForm.Designer.cs"><DependentUpon>TerminalSettingsForm.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="TerminalSettingsForm.resx"><DependentUpon>TerminalSettingsForm.cs</DependentUpon></EmbeddedResource>
+    <Compile Update="TerminalForm.Designer.cs"><DependentUpon>TerminalForm.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="TerminalForm.resx"><DependentUpon>TerminalForm.cs</DependentUpon></EmbeddedResource>
+    <Compile Update="SettingsForm.Designer.cs"><DependentUpon>SettingsForm.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="SettingsForm.resx"><DependentUpon>SettingsForm.cs</DependentUpon></EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Garde-fou MSB3577 : un seul .resx par formulaire. Ignore les .resx parasites du type MainForm.Run.resx
+         (parfois créés par le concepteur) et un éventuel dossier SerialTerminal copié dans le projet. -->
+    <EmbeddedResource Remove="MainForm.*.resx" />
+    <Compile Remove="SerialTerminal\**" />
+    <EmbeddedResource Remove="SerialTerminal\**" />
+    <None Remove="SerialTerminal\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ico1.ico" />
+  </ItemGroup>
+</Project>

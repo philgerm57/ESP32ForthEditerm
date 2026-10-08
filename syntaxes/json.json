@@ -1,0 +1,52 @@
+{
+  "caseSensitive": false,
+  "fontName": "Consolas",
+  "fontSize": 11,
+  "background": "#1E1E1E",
+  "foreground": "#D4D4D4",
+  "lineNumberForeground": "#858585",
+  "lineNumberBackground": "#252526",
+  "rules": [
+    {
+      "name": "chaînes",
+      "words": [],
+      "pattern": "\"(?:[^\"\\\\\\r\\n]|\\\\.)*\"",
+      "color": "#CE9178",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "name": "clés",
+      "words": [],
+      "pattern": "\"(?:[^\"\\\\\\r\\n]|\\\\.)*\"(?=\\s*:)",
+      "color": "#9CDCFE",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "name": "nombres",
+      "words": [],
+      "pattern": "(?<![\\w.])-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?(?![\\w.])",
+      "color": "#B5CEA8",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "name": "constantes",
+      "words": [],
+      "pattern": "\\b(?:true|false|null)\\b",
+      "color": "#569CD6",
+      "bold": true,
+      "italic": false
+    }
+  ],
+  "autoIndent": true,
+  "indentSize": 4,
+  "indentAfterColon": false,
+  "tabUsesSpaces": false,
+  "name": "JSON",
+  "extensions": [
+    ".json"
+  ],
+  "themes": {}
+}

@@ -1,0 +1,23 @@
+{
+  "caseSensitive": false,
+  "fontName": "Consolas",
+  "fontSize": 11,
+  "background": "#1E1E1E",
+  "foreground": "#D4D4D4",
+  "lineNumberForeground": "#858585",
+  "lineNumberBackground": "#252526",
+  "rules": [],
+  "autoIndent": true,
+  "indentSize": 4,
+  "indentAfterColon": false,
+  "tabUsesSpaces": false,
+  "name": "Texte brut",
+  "extensions": [
+    ".txt",
+    ".md",
+    ".log",
+    ".ini",
+    ".cfg"
+  ],
+  "themes": {}
+}
