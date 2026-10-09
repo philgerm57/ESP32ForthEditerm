@@ -95,6 +95,27 @@ public partial class MainForm : Form
     void mnuReloadSyntax_Click(object sender, EventArgs e) => ReloadSyntax();
     void mnuEditSyntax_Click(object sender, EventArgs e) => OpenFile(SyntaxPath);
 
+    // ================= Réindentation du code Forth =================
+    void mnuReindent_Click(object sender, EventArgs e) => ReindentCurrent();
+    void ctxReindent_Click(object sender, EventArgs e) => ReindentCurrent();
+
+    void ReindentCurrent()
+    {
+        var t = Current;
+        if (t == null) return;
+        var cfg = t.Syntax ?? _library.Default;
+        bool forth = string.Equals(cfg.Formatter, "forth", StringComparison.OrdinalIgnoreCase)
+                     || (string.IsNullOrEmpty(cfg.Formatter) && ReferenceEquals(cfg, _library.Default));
+        if (!forth)
+        {
+            MessageBox.Show(this,
+                $"La réindentation Forth ne s'applique pas à la syntaxe « {cfg.Name} ».\n\nPour l'activer, ajoutez \"formatter\": \"forth\" dans son fichier de syntaxe.",
+                "Réindenter", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
+        }
+        lblSel.Text = t.Editor.ReindentCode() ? "Réindenté" : "Déjà indenté";
+    }
+
     void mnuOpenSyntaxFolder_Click(object sender, EventArgs e)
     {
         try
@@ -111,6 +132,7 @@ public partial class MainForm : Form
     void mnuZoomReset_Click(object sender, EventArgs e) => Zoom(0);
     void mnuRestoreSession_Click(object sender, EventArgs e) { _settings.RestoreSession = mnuRestoreSession.Checked; _settings.Save(); }
     void mnuGoTo_Click(object sender, EventArgs e) => GoToLine();
+
     //================== Menu aide =======================
 
     void mnuAfficherAide_Click(object sender, EventArgs e) => AfficherAide();

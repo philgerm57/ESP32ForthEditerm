@@ -40,6 +40,13 @@ public class SyntaxConfig
     /// <summary>La touche Tab insère IndentSize espaces au lieu d'un caractère de tabulation.</summary>
     public bool TabUsesSpaces { get; set; }
 
+    /// <summary>Réindentation du code (Édition → Réindenter) : "forth" l'active pour cette syntaxe ; vide = actif seulement pour la syntaxe par défaut.</summary>
+    public string Formatter { get; set; } = "";
+    /// <summary>Réindentation avec des tabulations au lieu de IndentSize espaces par niveau.</summary>
+    public bool FormatWithTabs { get; set; }
+    /// <summary>Supprime les espaces en fin de ligne lors de la réindentation.</summary>
+    public bool FormatTrimTrailing { get; set; } = true;
+
     /// <summary>Nom affiché pour cette syntaxe (libre).</summary>
     public string Name { get; set; } = "";
     /// <summary>Extensions de fichiers colorées par ce fichier, ex. [".json", ".jsonc"].</summary>
@@ -116,6 +123,7 @@ public class SyntaxConfig
     public static SyntaxConfig Default() => new()
     {
         Name = "Forth",
+        Formatter = "forth",
         Extensions = new() { ".fs", ".fth", ".4th", ".forth", ".f", ".fb", ".fr", ".frt", ".seq" },
         Themes = new() { ["light"] = LightPalette() },
         Rules = new List<SyntaxRule>
@@ -210,7 +218,8 @@ public class SyntaxConfig
             Background = Col(pal?.Background ?? Background, Color.FromArgb(30, 30, 30)),
             NumberForeground = Col(pal?.LineNumberForeground ?? LineNumberForeground, Color.Gray),
             NumberBackground = Col(pal?.LineNumberBackground ?? LineNumberBackground, Color.FromArgb(37, 37, 38)),
-            AutoIndent = AutoIndent, IndentSize = Math.Clamp(IndentSize, 1, 16), IndentAfterColon = IndentAfterColon, TabUsesSpaces = TabUsesSpaces
+            AutoIndent = AutoIndent, IndentSize = Math.Clamp(IndentSize, 1, 16), IndentAfterColon = IndentAfterColon, TabUsesSpaces = TabUsesSpaces,
+            FormatWithTabs = FormatWithTabs, FormatTrimTrailing = FormatTrimTrailing
         };
         var opt = RegexOptions.Multiline | RegexOptions.CultureInvariant |
                   (CaseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase);
@@ -249,6 +258,7 @@ public class SyntaxTheme
     public List<string> Errors = new();
     public List<string> Keywords = new();   // mots Forth connus (pour la complétion)
     public bool AutoIndent = true, IndentAfterColon = true, TabUsesSpaces;
+    public bool FormatWithTabs, FormatTrimTrailing = true;
     public int IndentSize = 4;
 }
 

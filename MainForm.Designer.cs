@@ -13,7 +13,6 @@ namespace ForthEditor
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             menuStrip = new MenuStrip();
             mnuFile = new ToolStripMenuItem();
             mnuNew = new ToolStripMenuItem();
@@ -45,6 +44,7 @@ namespace ForthEditor
             mnuReplace = new ToolStripMenuItem();
             sepEdit3 = new ToolStripSeparator();
             mnuGoTo = new ToolStripMenuItem();
+            mnuReindent = new ToolStripMenuItem();
             mnuView = new ToolStripMenuItem();
             mnuReloadSyntax = new ToolStripMenuItem();
             mnuEditSyntax = new ToolStripMenuItem();
@@ -76,7 +76,7 @@ namespace ForthEditor
             mnuForthSettings = new ToolStripMenuItem();
             mnuAutoComplete = new ToolStripMenuItem();
             aideToolStripMenuItem = new ToolStripMenuItem();
-            afficherLaideToolStripMenuItem = new ToolStripMenuItem();
+            afficherAideToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripSeparator();
             aProposToolStripMenuItem = new ToolStripMenuItem();
             statusStrip = new StatusStrip();
@@ -91,6 +91,8 @@ namespace ForthEditor
             ctxPaste = new ToolStripMenuItem();
             sepCtx = new ToolStripSeparator();
             ctxSelectAll = new ToolStripMenuItem();
+            sepCtx2 = new ToolStripSeparator();
+            ctxReindent = new ToolStripMenuItem();
             splitOuter = new SplitContainer();
             splitInner = new SplitContainer();
             tabs = new TabControl();
@@ -262,7 +264,7 @@ namespace ForthEditor
             // 
             // mnuEdit
             // 
-            mnuEdit.DropDownItems.AddRange(new ToolStripItem[] { mnuUndo, mnuRedo, sepEdit1, mnuCut, mnuCopy, mnuPaste, mnuSelectAll, sepEdit2, mnuFind, mnuFindNext, mnuFindPrev, mnuReplace, sepEdit3, mnuGoTo });
+            mnuEdit.DropDownItems.AddRange(new ToolStripItem[] { mnuUndo, mnuRedo, sepEdit1, mnuCut, mnuCopy, mnuPaste, mnuSelectAll, sepEdit2, mnuFind, mnuFindNext, mnuFindPrev, mnuReplace, sepEdit3, mnuGoTo, mnuReindent });
             mnuEdit.Name = "mnuEdit";
             mnuEdit.Size = new Size(70, 24);
             mnuEdit.Text = "&Édition";
@@ -270,60 +272,60 @@ namespace ForthEditor
             // mnuUndo
             // 
             mnuUndo.Name = "mnuUndo";
-            mnuUndo.Size = new Size(345, 26);
+            mnuUndo.Size = new Size(377, 26);
             mnuUndo.Text = "&Annuler";
             mnuUndo.Click += Undo_Click;
             // 
             // mnuRedo
             // 
             mnuRedo.Name = "mnuRedo";
-            mnuRedo.Size = new Size(345, 26);
+            mnuRedo.Size = new Size(377, 26);
             mnuRedo.Text = "&Rétablir";
             mnuRedo.Click += Redo_Click;
             // 
             // sepEdit1
             // 
             sepEdit1.Name = "sepEdit1";
-            sepEdit1.Size = new Size(342, 6);
+            sepEdit1.Size = new Size(374, 6);
             // 
             // mnuCut
             // 
             mnuCut.Name = "mnuCut";
-            mnuCut.Size = new Size(345, 26);
+            mnuCut.Size = new Size(377, 26);
             mnuCut.Text = "Co&uper";
             mnuCut.Click += Cut_Click;
             // 
             // mnuCopy
             // 
             mnuCopy.Name = "mnuCopy";
-            mnuCopy.Size = new Size(345, 26);
+            mnuCopy.Size = new Size(377, 26);
             mnuCopy.Text = "&Copier";
             mnuCopy.Click += Copy_Click;
             // 
             // mnuPaste
             // 
             mnuPaste.Name = "mnuPaste";
-            mnuPaste.Size = new Size(345, 26);
+            mnuPaste.Size = new Size(377, 26);
             mnuPaste.Text = "&Coller";
             mnuPaste.Click += Paste_Click;
             // 
             // mnuSelectAll
             // 
             mnuSelectAll.Name = "mnuSelectAll";
-            mnuSelectAll.Size = new Size(345, 26);
+            mnuSelectAll.Size = new Size(377, 26);
             mnuSelectAll.Text = "Tout &sélectionner";
             mnuSelectAll.Click += SelectAll_Click;
             // 
             // sepEdit2
             // 
             sepEdit2.Name = "sepEdit2";
-            sepEdit2.Size = new Size(342, 6);
+            sepEdit2.Size = new Size(374, 6);
             // 
             // mnuFind
             // 
             mnuFind.Name = "mnuFind";
             mnuFind.ShortcutKeys = Keys.Control | Keys.F;
-            mnuFind.Size = new Size(345, 26);
+            mnuFind.Size = new Size(377, 26);
             mnuFind.Text = "&Rechercher…";
             mnuFind.Click += mnuFind_Click;
             // 
@@ -331,7 +333,7 @@ namespace ForthEditor
             // 
             mnuFindNext.Name = "mnuFindNext";
             mnuFindNext.ShortcutKeys = Keys.F3;
-            mnuFindNext.Size = new Size(345, 26);
+            mnuFindNext.Size = new Size(377, 26);
             mnuFindNext.Text = "Occurrence &suivante";
             mnuFindNext.Click += mnuFindNext_Click;
             // 
@@ -339,7 +341,7 @@ namespace ForthEditor
             // 
             mnuFindPrev.Name = "mnuFindPrev";
             mnuFindPrev.ShortcutKeys = Keys.Shift | Keys.F3;
-            mnuFindPrev.Size = new Size(345, 26);
+            mnuFindPrev.Size = new Size(377, 26);
             mnuFindPrev.Text = "Occurrence &précédente";
             mnuFindPrev.Click += mnuFindPrev_Click;
             // 
@@ -347,22 +349,30 @@ namespace ForthEditor
             // 
             mnuReplace.Name = "mnuReplace";
             mnuReplace.ShortcutKeys = Keys.Control | Keys.H;
-            mnuReplace.Size = new Size(345, 26);
+            mnuReplace.Size = new Size(377, 26);
             mnuReplace.Text = "Re&mplacer…";
             mnuReplace.Click += mnuReplace_Click;
             // 
             // sepEdit3
             // 
             sepEdit3.Name = "sepEdit3";
-            sepEdit3.Size = new Size(342, 6);
+            sepEdit3.Size = new Size(374, 6);
             // 
             // mnuGoTo
             // 
             mnuGoTo.Name = "mnuGoTo";
             mnuGoTo.ShortcutKeys = Keys.Control | Keys.G;
-            mnuGoTo.Size = new Size(345, 26);
+            mnuGoTo.Size = new Size(377, 26);
             mnuGoTo.Text = "Aller à la &ligne…";
             mnuGoTo.Click += mnuGoTo_Click;
+            // 
+            // mnuReindent
+            // 
+            mnuReindent.Name = "mnuReindent";
+            mnuReindent.ShortcutKeys = Keys.Control | Keys.Shift | Keys.I;
+            mnuReindent.Size = new Size(377, 26);
+            mnuReindent.Text = "&Réindenter le code Forth";
+            mnuReindent.Click += mnuReindent_Click;
             // 
             // mnuView
             // 
@@ -587,26 +597,26 @@ namespace ForthEditor
             // 
             // aideToolStripMenuItem
             // 
-            aideToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { afficherLaideToolStripMenuItem, toolStripMenuItem1, aProposToolStripMenuItem });
+            aideToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { afficherAideToolStripMenuItem, toolStripMenuItem1, aProposToolStripMenuItem });
             aideToolStripMenuItem.Name = "aideToolStripMenuItem";
             aideToolStripMenuItem.Size = new Size(54, 24);
             aideToolStripMenuItem.Text = "Aide";
             // 
-            // afficherLaideToolStripMenuItem
+            // afficherAideToolStripMenuItem
             // 
-            afficherLaideToolStripMenuItem.Name = "afficherLaideToolStripMenuItem";
-            afficherLaideToolStripMenuItem.Size = new Size(184, 26);
-            afficherLaideToolStripMenuItem.Text = "Afficher l'aide";
+            afficherAideToolStripMenuItem.Name = "afficherAideToolStripMenuItem";
+            afficherAideToolStripMenuItem.Size = new Size(224, 26);
+            afficherAideToolStripMenuItem.Text = "Afficher aide";
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(181, 6);
+            toolStripMenuItem1.Size = new Size(221, 6);
             // 
             // aProposToolStripMenuItem
             // 
             aProposToolStripMenuItem.Name = "aProposToolStripMenuItem";
-            aProposToolStripMenuItem.Size = new Size(184, 26);
+            aProposToolStripMenuItem.Size = new Size(224, 26);
             aProposToolStripMenuItem.Text = "A Propos";
             aProposToolStripMenuItem.Click += mnuApropos_Click;
             // 
@@ -657,43 +667,55 @@ namespace ForthEditor
             // ctxEditor
             // 
             ctxEditor.ImageScalingSize = new Size(20, 20);
-            ctxEditor.Items.AddRange(new ToolStripItem[] { ctxCut, ctxCopy, ctxPaste, sepCtx, ctxSelectAll });
+            ctxEditor.Items.AddRange(new ToolStripItem[] { ctxCut, ctxCopy, ctxPaste, sepCtx, ctxSelectAll, sepCtx2, ctxReindent });
             ctxEditor.Name = "ctxEditor";
-            ctxEditor.Size = new Size(192, 106);
+            ctxEditor.Size = new Size(204, 136);
             ctxEditor.Opening += ctxEditor_Opening;
             // 
             // ctxCut
             // 
             ctxCut.Name = "ctxCut";
-            ctxCut.Size = new Size(191, 24);
+            ctxCut.Size = new Size(203, 24);
             ctxCut.Text = "Couper";
             ctxCut.Click += Cut_Click;
             // 
             // ctxCopy
             // 
             ctxCopy.Name = "ctxCopy";
-            ctxCopy.Size = new Size(191, 24);
+            ctxCopy.Size = new Size(203, 24);
             ctxCopy.Text = "Copier";
             ctxCopy.Click += Copy_Click;
             // 
             // ctxPaste
             // 
             ctxPaste.Name = "ctxPaste";
-            ctxPaste.Size = new Size(191, 24);
+            ctxPaste.Size = new Size(203, 24);
             ctxPaste.Text = "Coller";
             ctxPaste.Click += Paste_Click;
             // 
             // sepCtx
             // 
             sepCtx.Name = "sepCtx";
-            sepCtx.Size = new Size(188, 6);
+            sepCtx.Size = new Size(200, 6);
             // 
             // ctxSelectAll
             // 
             ctxSelectAll.Name = "ctxSelectAll";
-            ctxSelectAll.Size = new Size(191, 24);
+            ctxSelectAll.Size = new Size(203, 24);
             ctxSelectAll.Text = "Tout sélectionner";
             ctxSelectAll.Click += SelectAll_Click;
+            // 
+            // sepCtx2
+            // 
+            sepCtx2.Name = "sepCtx2";
+            sepCtx2.Size = new Size(200, 6);
+            // 
+            // ctxReindent
+            // 
+            ctxReindent.Name = "ctxReindent";
+            ctxReindent.Size = new Size(203, 24);
+            ctxReindent.Text = "Réindenter le code";
+            ctxReindent.Click += ctxReindent_Click;
             // 
             // splitOuter
             // 
@@ -712,7 +734,7 @@ namespace ForthEditor
             // 
             splitOuter.Panel2.Controls.Add(pnlOutput);
             splitOuter.Size = new Size(1001, 908);
-            splitOuter.SplitterDistance = 637;
+            splitOuter.SplitterDistance = 646;
             splitOuter.SplitterWidth = 5;
             splitOuter.TabIndex = 0;
             // 
@@ -732,8 +754,8 @@ namespace ForthEditor
             // 
             splitInner.Panel2.Controls.Add(pnlOutline);
             splitInner.Panel2MinSize = 120;
-            splitInner.Size = new Size(1001, 637);
-            splitInner.SplitterDistance = 713;
+            splitInner.Size = new Size(1001, 646);
+            splitInner.SplitterDistance = 722;
             splitInner.SplitterWidth = 5;
             splitInner.TabIndex = 0;
             // 
@@ -749,7 +771,7 @@ namespace ForthEditor
             tabs.Padding = new Point(12, 4);
             tabs.SelectedIndex = 0;
             tabs.ShowToolTips = true;
-            tabs.Size = new Size(713, 637);
+            tabs.Size = new Size(722, 646);
             tabs.SizeMode = TabSizeMode.Fixed;
             tabs.TabIndex = 0;
             tabs.DrawItem += tabs_DrawItem;
@@ -769,7 +791,7 @@ namespace ForthEditor
             pnlOutline.Location = new Point(0, 0);
             pnlOutline.Margin = new Padding(3, 4, 3, 4);
             pnlOutline.Name = "pnlOutline";
-            pnlOutline.Size = new Size(283, 637);
+            pnlOutline.Size = new Size(274, 646);
             pnlOutline.TabIndex = 0;
             // 
             // lstOutline
@@ -781,7 +803,7 @@ namespace ForthEditor
             lstOutline.Location = new Point(0, 85);
             lstOutline.Margin = new Padding(3, 4, 3, 4);
             lstOutline.Name = "lstOutline";
-            lstOutline.Size = new Size(283, 552);
+            lstOutline.Size = new Size(274, 561);
             lstOutline.TabIndex = 2;
             lstOutline.MouseClick += lstOutline_MouseClick;
             lstOutline.KeyDown += lstOutline_KeyDown;
@@ -793,7 +815,7 @@ namespace ForthEditor
             txtOutlineFilter.Margin = new Padding(3, 4, 3, 4);
             txtOutlineFilter.Name = "txtOutlineFilter";
             txtOutlineFilter.PlaceholderText = "Filtrer…";
-            txtOutlineFilter.Size = new Size(283, 27);
+            txtOutlineFilter.Size = new Size(274, 27);
             txtOutlineFilter.TabIndex = 1;
             txtOutlineFilter.TextChanged += txtOutlineFilter_TextChanged;
             // 
@@ -804,7 +826,7 @@ namespace ForthEditor
             chkOutlineDefsOnly.Margin = new Padding(3, 4, 3, 4);
             chkOutlineDefsOnly.Name = "chkOutlineDefsOnly";
             chkOutlineDefsOnly.Padding = new Padding(7, 0, 0, 0);
-            chkOutlineDefsOnly.Size = new Size(283, 29);
+            chkOutlineDefsOnly.Size = new Size(274, 29);
             chkOutlineDefsOnly.TabIndex = 3;
             chkOutlineDefsOnly.Text = "Seulement les « : »";
             chkOutlineDefsOnly.UseVisualStyleBackColor = true;
@@ -815,7 +837,7 @@ namespace ForthEditor
             lblOutline.Dock = DockStyle.Top;
             lblOutline.Location = new Point(0, 0);
             lblOutline.Name = "lblOutline";
-            lblOutline.Size = new Size(283, 29);
+            lblOutline.Size = new Size(274, 29);
             lblOutline.TabIndex = 0;
             lblOutline.Text = " Définitions";
             lblOutline.TextAlign = ContentAlignment.MiddleLeft;
@@ -829,7 +851,7 @@ namespace ForthEditor
             pnlOutput.Location = new Point(0, 0);
             pnlOutput.Margin = new Padding(3, 4, 3, 4);
             pnlOutput.Name = "pnlOutput";
-            pnlOutput.Size = new Size(1001, 266);
+            pnlOutput.Size = new Size(1001, 257);
             pnlOutput.TabIndex = 0;
             // 
             // rtbOutput
@@ -842,7 +864,7 @@ namespace ForthEditor
             rtbOutput.Margin = new Padding(3, 4, 3, 4);
             rtbOutput.Name = "rtbOutput";
             rtbOutput.ReadOnly = true;
-            rtbOutput.Size = new Size(1001, 199);
+            rtbOutput.Size = new Size(1001, 190);
             rtbOutput.TabIndex = 1;
             rtbOutput.Text = "";
             rtbOutput.WordWrap = false;
@@ -852,7 +874,7 @@ namespace ForthEditor
             // 
             txtStdin.Dock = DockStyle.Bottom;
             txtStdin.Font = new Font("Consolas", 10F);
-            txtStdin.Location = new Point(0, 239);
+            txtStdin.Location = new Point(0, 230);
             txtStdin.Margin = new Padding(3, 4, 3, 4);
             txtStdin.Name = "txtStdin";
             txtStdin.PlaceholderText = "Entrée standard du programme — Entrée pour envoyer une ligne";
@@ -1093,7 +1115,6 @@ namespace ForthEditor
             Controls.Add(splitLeft);
             Controls.Add(statusStrip);
             Controls.Add(menuStrip);
-            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip;
             Margin = new Padding(3, 4, 3, 4);
             Name = "MainForm";
@@ -1221,6 +1242,9 @@ namespace ForthEditor
         private System.Windows.Forms.ToolStripStatusLabel lblEol;
         private System.Windows.Forms.ToolStripMenuItem mnuToolsMenu;
         private System.Windows.Forms.ToolStripMenuItem mnuTerminal;
+        private System.Windows.Forms.ToolStripMenuItem mnuReindent;
+        private System.Windows.Forms.ToolStripMenuItem ctxReindent;
+        private System.Windows.Forms.ToolStripSeparator sepCtx2;
         private System.Windows.Forms.ToolStripMenuItem mnuOpenSyntaxFolder;
         private System.Windows.Forms.SplitContainer splitLeft;
         private System.Windows.Forms.Panel pnlProject;
@@ -1241,7 +1265,7 @@ namespace ForthEditor
         private System.Windows.Forms.ToolStripMenuItem mnuOpenFolder;
         private System.Windows.Forms.ToolStripMenuItem mnuShowProject;
         private ToolStripMenuItem aideToolStripMenuItem;
-        private ToolStripMenuItem afficherLaideToolStripMenuItem;
+        private ToolStripMenuItem afficherAideToolStripMenuItem;
         private ToolStripSeparator toolStripMenuItem1;
         private ToolStripMenuItem aProposToolStripMenuItem;
     }

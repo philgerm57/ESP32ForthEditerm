@@ -31,9 +31,12 @@
   <ItemGroup>
     <!-- Garde-fou MSB3577 : un seul .resx par formulaire. Ignore les .resx parasites du type MainForm.Run.resx
          (parfois créés par le concepteur) et un éventuel dossier SerialTerminal copié dans le projet. -->
+    <EmbeddedResource Remove="files\**" />
     <EmbeddedResource Remove="MainForm.*.resx" />
+    <Compile Remove="files\**" />
     <Compile Remove="SerialTerminal\**" />
     <EmbeddedResource Remove="SerialTerminal\**" />
+    <None Remove="files\**" />
     <None Remove="SerialTerminal\**" />
   </ItemGroup>
   <ItemGroup>

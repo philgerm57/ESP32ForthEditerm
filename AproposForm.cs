@@ -10,9 +10,11 @@ namespace ForthEditor
 {
     public partial class AproposForm : Form
     {
+        private string _Version = "2.2"; 
         public AproposForm()
         {
             InitializeComponent();
+            lblVersion.Text = _Version;
         }
     }
 }

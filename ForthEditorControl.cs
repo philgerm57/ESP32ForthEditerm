@@ -435,6 +435,7 @@ public class ForthEditorControl : UserControl
         _box.Font = theme.Font; _box.BackColor = theme.Background; _box.ForeColor = theme.Foreground;
         _box.AutoIndent = theme.AutoIndent; _box.IndentSize = theme.IndentSize; _box.IndentAfterColon = theme.IndentAfterColon;
         _box.TabUsesSpaces = theme.TabUsesSpaces;
+        _formatWithTabs = theme.FormatWithTabs; _formatTrimTrailing = theme.FormatTrimTrailing;
         _numbers.BackColor = theme.NumberBackground; _numbers.ForeColor = theme.NumberForeground;
         _list.BackColor = theme.NumberBackground; _list.ForeColor = theme.Foreground;
         _keywords = theme.Keywords;
@@ -541,6 +542,53 @@ public class ForthEditorControl : UserControl
         _box.Select(LineStart(line), 0);
         _box.ScrollToCaret();
         _box.Focus();
+    }
+
+    // ===================== Réindentation du code Forth =====================
+    bool _formatWithTabs, _formatTrimTrailing = true;
+
+    /// <summary>
+    /// Réindente la sélection (ou tout le fichier s'il n'y a pas de sélection) d'après les structures de contrôle.
+    /// Retourne false si le texte était déjà correctement indenté.
+    /// </summary>
+    public bool ReindentCode()
+    {
+        string text = _box.Text;
+        string[] lines = text.Split('\n');
+        int selStart = _box.SelectionStart, selLen = _box.SelectionLength;
+        int caretLine = LineFromIndex(selStart);
+        int caretCol = selStart - LineStart(caretLine);
+
+        int first = 0, last = lines.Length - 1;
+        if (selLen > 0)
+        {
+            int selEnd = selStart + selLen;
+            first = caretLine;
+            last = LineFromIndex(text[selEnd - 1] == '\n' ? selEnd - 1 : selEnd);   // une sélection qui finit après un saut de ligne ne touche pas la ligne suivante
+        }
+
+        var options = new ForthFormatter.Options { IndentSize = _box.IndentSize, UseTabs = _formatWithTabs, TrimTrailing = _formatTrimTrailing };
+        string[] formatted = ForthFormatter.ReindentRange(lines, first, last, options);
+
+        string oldBlock = string.Join("\n", lines, first, last - first + 1);
+        string newBlock = string.Join("\n", formatted);
+        if (oldBlock == newBlock) return false;
+
+        int blockStart = LineStart(first);
+        _box.Select(blockStart, oldBlock.Length);
+        _box.SelectedText = newBlock;
+
+        if (selLen > 0) _box.Select(blockStart, newBlock.Length);               // la sélection englobe les lignes réindentées
+        else
+        {
+            // le curseur reste au même endroit dans le texte de sa ligne
+            string before = lines[caretLine], after = formatted[caretLine - first];
+            int oldIndent = before.Length - before.TrimStart().Length;
+            int newIndent = after.Length - after.TrimStart().Length;
+            int col = Math.Min(after.Length, newIndent + Math.Max(0, caretCol - oldIndent));
+            _box.Select(LineStart(caretLine) + col, 0);
+        }
+        return true;
     }
 
     // ===================== Repliement =====================

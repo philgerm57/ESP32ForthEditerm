@@ -7,6 +7,9 @@
     <Compile Update="AproposForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="files\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="FindReplaceForm.cs">
       <SubType>Form</SubType>
     </Compile>

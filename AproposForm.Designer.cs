@@ -32,6 +32,7 @@
             label1 = new Label();
             label2 = new Label();
             listBox1 = new ListBox();
+            lblVersion = new Label();
             SuspendLayout();
             // 
             // button1
@@ -50,9 +51,9 @@
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(12, 410);
             label1.Name = "label1";
-            label1.Size = new Size(266, 28);
+            label1.Size = new Size(353, 28);
             label1.TabIndex = 1;
-            label1.Text = "(c) 2026 Germain PHILIPPE";
+            label1.Text = "(c) 2026 Germain PHILIPPE  Version:";
             // 
             // label2
             // 
@@ -72,11 +73,22 @@
             listBox1.Size = new Size(760, 304);
             listBox1.TabIndex = 3;
             // 
+            // lblVersion
+            // 
+            lblVersion.AutoSize = true;
+            lblVersion.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblVersion.Location = new Point(360, 410);
+            lblVersion.Name = "lblVersion";
+            lblVersion.Size = new Size(41, 28);
+            lblVersion.TabIndex = 4;
+            lblVersion.Text = "2.2";
+            // 
             // AproposForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblVersion);
             Controls.Add(listBox1);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -94,5 +106,6 @@
         private Label label1;
         private Label label2;
         private ListBox listBox1;
+        private Label lblVersion;
     }
 }
