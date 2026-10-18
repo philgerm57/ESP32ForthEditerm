@@ -40,6 +40,9 @@ public class AppSettings
     public bool AutoComplete { get; set; } = true;
     public bool OutlineDefsOnly { get; set; }                 // plan : seulement les définitions « : »
 
+    // --- Aide PDF ---
+    public string PdfFolder { get; set; }                     // null = sous-dossier « doc » de l'application
+
     // --- Projet (dossier) ---
     public string ProjectFolder { get; set; }
     public List<string> ProjectFolders { get; set; } = new(); // derniers dossiers ouverts

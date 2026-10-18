@@ -25,6 +25,9 @@
     <Compile Update="MainForm.Terminal.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="PdfViewerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="PromptForm.cs">
       <SubType>Form</SubType>
     </Compile>

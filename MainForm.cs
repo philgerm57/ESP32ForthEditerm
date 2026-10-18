@@ -9,7 +9,7 @@ public partial class MainForm : Form
 {
     const int CloseSize = 16, MaxRecent = 10;
     const string FileFilter = "Fichiers Forth|*.fs;*.fth;*.4th;*.forth;*.f;*.fb|Tous les fichiers|*.*";
-    static string SyntaxPath => Path.Combine(AppContext.BaseDirectory, "syntax.json");
+    static string SyntaxPath => Path.Combine(AppContext.BaseDirectory, "syntaxes", "syntax.json");
 
     readonly Font _closeFont = new("Segoe UI Symbol", 8f);
     readonly string[] _args;
@@ -454,10 +454,27 @@ public partial class MainForm : Form
 
     //==================== Menu Aide =====================
 
-    void AfficherAide()
-    {
+    PdfViewerForm _pdfViewer;
 
+    PdfViewerForm GetPdfViewer()
+    {
+        if (_pdfViewer == null || _pdfViewer.IsDisposed)
+        {
+            _pdfViewer = new PdfViewerForm(_settings);
+            _pdfViewer.Show(this);             // non modale : l'éditeur reste utilisable
+        }
+        else
+        {
+            if (_pdfViewer.WindowState == FormWindowState.Minimized) _pdfViewer.WindowState = FormWindowState.Normal;
+            _pdfViewer.Activate();
+        }
+        return _pdfViewer;
     }
+
+    void AfficherAide() => GetPdfViewer();
+
+    void mnuPdfOpen_Click(object sender, EventArgs e) => GetPdfViewer().OpenPdfFile();
+    void mnuPdfFolder_Click(object sender, EventArgs e) => GetPdfViewer().ChooseFolder();
 
     void APropos()
     {

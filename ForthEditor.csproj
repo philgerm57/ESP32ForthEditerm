@@ -13,6 +13,8 @@
   <ItemGroup>
     <!-- Nécessaire pour System.IO.Ports (SerialPort) sur .NET moderne -->
     <PackageReference Include="System.IO.Ports" Version="9.0.0" />
+    <!-- Visionneuse PDF de l'aide (nécessite le runtime Edge WebView2 sur le poste) -->
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2903.40" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="MainForm.Designer.cs"><DependentUpon>MainForm.cs</DependentUpon></Compile>
@@ -27,6 +29,8 @@
     <EmbeddedResource Update="TerminalForm.resx"><DependentUpon>TerminalForm.cs</DependentUpon></EmbeddedResource>
     <Compile Update="SettingsForm.Designer.cs"><DependentUpon>SettingsForm.cs</DependentUpon></Compile>
     <EmbeddedResource Update="SettingsForm.resx"><DependentUpon>SettingsForm.cs</DependentUpon></EmbeddedResource>
+    <Compile Update="PdfViewerForm.Designer.cs"><DependentUpon>PdfViewerForm.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="PdfViewerForm.resx"><DependentUpon>PdfViewerForm.cs</DependentUpon></EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <!-- Garde-fou MSB3577 : un seul .resx par formulaire. Ignore les .resx parasites du type MainForm.Run.resx
@@ -41,5 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ico1.ico" />
+    <!-- PDF de l'aide : copiés dans <exe>\doc -->
+    <None Update="doc\**\*.pdf" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

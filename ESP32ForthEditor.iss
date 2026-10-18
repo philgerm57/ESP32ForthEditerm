@@ -57,6 +57,7 @@ Source: "G:\ES32ForthEditerm\*.csproj"; DestDir: "{app}\source"; Flags: ignoreve
 Source: "G:\ES32ForthEditerm\*.iss"; DestDir: "{app}\source"; Flags: ignoreversion
 
 Source: "G:\ES32ForthEditerm\syntaxes\*.json";DestDir: "{app}\syntaxes"; Flags: ignoreversion
+Source: "G:\ES32ForthEditerm\doc\*.pdf"; DestDir: "{app}\doc"; Flags: ignoreversion skipifsourcedoesntexist
 
 
 
