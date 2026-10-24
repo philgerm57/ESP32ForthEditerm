@@ -1,3 +1,7 @@
+// ForthEditor — éditeur de code Forth et terminal série pour ESP32Forth
+// Copyright (C) 2026 Germain PHILIPPE
+// Licence : GNU General Public License v3.0 ou ultérieure — voir le fichier LICENSE.
+
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -13,6 +17,14 @@ public class ForthProfile
     public string Args { get; set; } = "\"{file}\"";
     /// <summary>Arguments utilisés par le bouton « Tester » (vide = lancer sans argument). Ex. --version pour gforth.</summary>
     public string TestArgs { get; set; } = "";
+}
+
+/// <summary>Un PDF récemment ouvert dans la visionneuse et la page où l'on s'était arrêté.</summary>
+public class PdfRecent
+{
+    public string Path { get; set; } = "";
+    public int Page { get; set; } = 1;
+    public string Zoom { get; set; }                       // zoom PDF.js : auto, page-width, page-fit ou facteur (1.25)
 }
 
 /// <summary>Préférences utilisateur : %AppData%\ForthEditor\settings.json</summary>
@@ -42,6 +54,12 @@ public class AppSettings
 
     // --- Aide PDF ---
     public string PdfFolder { get; set; }                     // null = sous-dossier « doc » de l'application
+    public int PdfSplit { get; set; }                         // largeur de la liste (0 = défaut)
+    public double PdfZoom { get; set; } = 1.0;                // zoom de la visionneuse
+    public int[] PdfBounds { get; set; }                      // x, y, largeur, hauteur de la fenêtre
+    public bool PdfMaximized { get; set; }
+    public int PdfRecentMax { get; set; } = 10;               // nombre de PDF mémorisés (le plus ancien est éliminé)
+    public List<PdfRecent> PdfRecents { get; set; } = new();  // du plus récent au plus ancien
 
     // --- Projet (dossier) ---
     public string ProjectFolder { get; set; }

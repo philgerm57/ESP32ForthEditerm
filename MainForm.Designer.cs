@@ -13,6 +13,7 @@ namespace ForthEditor
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             menuStrip = new MenuStrip();
             mnuFile = new ToolStripMenuItem();
             mnuNew = new ToolStripMenuItem();
@@ -752,7 +753,7 @@ namespace ForthEditor
             // 
             splitOuter.Panel2.Controls.Add(pnlOutput);
             splitOuter.Size = new Size(1001, 908);
-            splitOuter.SplitterDistance = 640;
+            splitOuter.SplitterDistance = 624;
             splitOuter.SplitterWidth = 5;
             splitOuter.TabIndex = 0;
             // 
@@ -772,8 +773,8 @@ namespace ForthEditor
             // 
             splitInner.Panel2.Controls.Add(pnlOutline);
             splitInner.Panel2MinSize = 120;
-            splitInner.Size = new Size(1001, 640);
-            splitInner.SplitterDistance = 716;
+            splitInner.Size = new Size(1001, 624);
+            splitInner.SplitterDistance = 700;
             splitInner.SplitterWidth = 5;
             splitInner.TabIndex = 0;
             // 
@@ -789,7 +790,7 @@ namespace ForthEditor
             tabs.Padding = new Point(12, 4);
             tabs.SelectedIndex = 0;
             tabs.ShowToolTips = true;
-            tabs.Size = new Size(716, 640);
+            tabs.Size = new Size(700, 624);
             tabs.SizeMode = TabSizeMode.Fixed;
             tabs.TabIndex = 0;
             tabs.DrawItem += tabs_DrawItem;
@@ -809,7 +810,7 @@ namespace ForthEditor
             pnlOutline.Location = new Point(0, 0);
             pnlOutline.Margin = new Padding(3, 4, 3, 4);
             pnlOutline.Name = "pnlOutline";
-            pnlOutline.Size = new Size(280, 640);
+            pnlOutline.Size = new Size(296, 624);
             pnlOutline.TabIndex = 0;
             // 
             // lstOutline
@@ -821,7 +822,7 @@ namespace ForthEditor
             lstOutline.Location = new Point(0, 85);
             lstOutline.Margin = new Padding(3, 4, 3, 4);
             lstOutline.Name = "lstOutline";
-            lstOutline.Size = new Size(280, 555);
+            lstOutline.Size = new Size(296, 539);
             lstOutline.TabIndex = 2;
             lstOutline.MouseClick += lstOutline_MouseClick;
             lstOutline.KeyDown += lstOutline_KeyDown;
@@ -833,7 +834,7 @@ namespace ForthEditor
             txtOutlineFilter.Margin = new Padding(3, 4, 3, 4);
             txtOutlineFilter.Name = "txtOutlineFilter";
             txtOutlineFilter.PlaceholderText = "Filtrer…";
-            txtOutlineFilter.Size = new Size(280, 27);
+            txtOutlineFilter.Size = new Size(296, 27);
             txtOutlineFilter.TabIndex = 1;
             txtOutlineFilter.TextChanged += txtOutlineFilter_TextChanged;
             // 
@@ -844,7 +845,7 @@ namespace ForthEditor
             chkOutlineDefsOnly.Margin = new Padding(3, 4, 3, 4);
             chkOutlineDefsOnly.Name = "chkOutlineDefsOnly";
             chkOutlineDefsOnly.Padding = new Padding(7, 0, 0, 0);
-            chkOutlineDefsOnly.Size = new Size(280, 29);
+            chkOutlineDefsOnly.Size = new Size(296, 29);
             chkOutlineDefsOnly.TabIndex = 3;
             chkOutlineDefsOnly.Text = "Seulement les « : »";
             chkOutlineDefsOnly.UseVisualStyleBackColor = true;
@@ -855,7 +856,7 @@ namespace ForthEditor
             lblOutline.Dock = DockStyle.Top;
             lblOutline.Location = new Point(0, 0);
             lblOutline.Name = "lblOutline";
-            lblOutline.Size = new Size(280, 29);
+            lblOutline.Size = new Size(296, 29);
             lblOutline.TabIndex = 0;
             lblOutline.Text = " Définitions";
             lblOutline.TextAlign = ContentAlignment.MiddleLeft;
@@ -869,7 +870,7 @@ namespace ForthEditor
             pnlOutput.Location = new Point(0, 0);
             pnlOutput.Margin = new Padding(3, 4, 3, 4);
             pnlOutput.Name = "pnlOutput";
-            pnlOutput.Size = new Size(1001, 263);
+            pnlOutput.Size = new Size(1001, 279);
             pnlOutput.TabIndex = 0;
             // 
             // rtbOutput
@@ -882,7 +883,7 @@ namespace ForthEditor
             rtbOutput.Margin = new Padding(3, 4, 3, 4);
             rtbOutput.Name = "rtbOutput";
             rtbOutput.ReadOnly = true;
-            rtbOutput.Size = new Size(1001, 196);
+            rtbOutput.Size = new Size(1001, 212);
             rtbOutput.TabIndex = 1;
             rtbOutput.Text = "";
             rtbOutput.WordWrap = false;
@@ -892,7 +893,7 @@ namespace ForthEditor
             // 
             txtStdin.Dock = DockStyle.Bottom;
             txtStdin.Font = new Font("Consolas", 10F);
-            txtStdin.Location = new Point(0, 236);
+            txtStdin.Location = new Point(0, 252);
             txtStdin.Margin = new Padding(3, 4, 3, 4);
             txtStdin.Name = "txtStdin";
             txtStdin.PlaceholderText = "Entrée standard du programme — Entrée pour envoyer une ligne";
@@ -1133,6 +1134,7 @@ namespace ForthEditor
             Controls.Add(splitLeft);
             Controls.Add(statusStrip);
             Controls.Add(menuStrip);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip;
             Margin = new Padding(3, 4, 3, 4);
             Name = "MainForm";

@@ -1,3 +1,7 @@
+// ForthEditor — éditeur de code Forth et terminal série pour ESP32Forth
+// Copyright (C) 2026 Germain PHILIPPE
+// Licence : GNU General Public License v3.0 ou ultérieure — voir le fichier LICENSE.
+
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Printing;
@@ -55,6 +59,14 @@ public partial class MainForm : Form
 
     void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
+        // La visionneuse PDF se ferme d'abord (elle relit sa page courante), puis l'application se referme
+        if (_pdfViewer != null && !_pdfViewer.IsDisposed)
+        {
+            e.Cancel = true;
+            _pdfViewer.AfterClose = () => Close();
+            _pdfViewer.Close();
+            return;
+        }
         StopProcess();
         // La session est capturée avant la fermeture des onglets
         var session = tabs.TabPages.Cast<EditorTab>().Where(t => t.FilePath != null).Select(t => t.FilePath).ToList();

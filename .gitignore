@@ -1,1 +1,11 @@
 bin/*
+
+bin/
+obj/
+.vs/
+Output/
+*.user
+*.suo
+*.zip
+# Le livre PDF n'est pas à nous : ne pas le publier sans l'accord de son auteur
+doc/*.pdf

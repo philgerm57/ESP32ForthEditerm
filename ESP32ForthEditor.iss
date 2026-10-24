@@ -3,7 +3,7 @@
 ; Non-commercial use only.
 
 #define MyAppName "ESP32ForthEditerm"
-#define MyAppVersion "2.0"
+#define MyAppVersion "2.4"
 #define MyAppPublisher "germain PHILIPPE"
 #define MyAppExeName "ForthEditor.exe"
 #define DoubleAmp(Value) StringChange(Value, "&", "&&")
@@ -27,6 +27,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 ; Uncomment the following line to use a 64-bit installer.
 ;SetupArchitecture=x64
 DisableProgramGroupPage=yes
+LicenseFile=G:\ES32ForthEditerm\LICENSE
 ; Uncomment the following line to run in non administrative install mode (install for current user only).
 ;PrivilegesRequired=lowest
 OutputBaseFilename=ESP32ForthEditerm
@@ -44,8 +45,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 Source: "G:\ES32ForthEditerm\bin\Release\net10.0-windows\publish\win-x64\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "G:\ES32ForthEditerm\bin\Release\net10.0-windows\publish\win-x64\*.json"; DestDir: "{app}"; Flags: ignoreversion
-
-;Source: "G:\ES32ForthEditerm\bin\Release\net10.0-windows\publish\*.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "G:\ES32ForthEditerm\bin\Release\net10.0-windows\publish\win-x64\*.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 Source: "G:\ES32ForthEditerm\*.user"; DestDir: "{app}\source"; Flags: ignoreversion
 Source: "G:\ES32ForthEditerm\*.cs"; DestDir: "{app}\source"; Flags: ignoreversion
@@ -57,6 +57,8 @@ Source: "G:\ES32ForthEditerm\*.csproj"; DestDir: "{app}\source"; Flags: ignoreve
 Source: "G:\ES32ForthEditerm\*.iss"; DestDir: "{app}\source"; Flags: ignoreversion
 
 Source: "G:\ES32ForthEditerm\syntaxes\*.json";DestDir: "{app}\syntaxes"; Flags: ignoreversion
+Source: "G:\ES32ForthEditerm\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
+Source: "G:\ES32ForthEditerm\pdfjs\*"; DestDir: "{app}\pdfjs"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "G:\ES32ForthEditerm\doc\*.pdf"; DestDir: "{app}\doc"; Flags: ignoreversion skipifsourcedoesntexist
 
 
@@ -68,5 +70,60 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
+; Runtime Edge WebView2 (visionneuse PDF) : installé seulement s'il manquait et a pu être téléchargé
+Filename: "{tmp}\MicrosoftEdgeWebview2Setup.exe"; Parameters: "/silent /install"; StatusMsg: "Installation du runtime Microsoft Edge WebView2..."; Flags: waituntilterminated; Check: WebView2ToInstall
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#DoubleAmp(MyAppName)}}"; Flags: nowait postinstall skipifsilent
 
+
+[Code]
+const
+  WebView2Guid = '{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}';
+  WebView2Url  = 'https://go.microsoft.com/fwlink/p/?LinkId=2124703';
+
+var
+  DownloadPage: TDownloadWizardPage;
+  WebView2Downloaded: Boolean;
+
+function WebView2Installed: Boolean;
+var
+  V: String;
+begin
+  Result :=
+    (RegQueryStringValue(HKLM32, 'SOFTWARE\Microsoft\EdgeUpdate\Clients\' + WebView2Guid, 'pv', V) and (V <> '') and (V <> '0.0.0.0')) or
+    (RegQueryStringValue(HKCU, 'Software\Microsoft\EdgeUpdate\Clients\' + WebView2Guid, 'pv', V) and (V <> '') and (V <> '0.0.0.0'));
+end;
+
+function WebView2ToInstall: Boolean;
+begin
+  Result := WebView2Downloaded and not WebView2Installed;
+end;
+
+procedure InitializeWizard;
+begin
+  DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), nil);
+end;
+
+function NextButtonClick(CurPageID: Integer): Boolean;
+begin
+  Result := True;
+  if (CurPageID = wpReady) and not WebView2Installed then
+  begin
+    DownloadPage.Clear;
+    DownloadPage.Add(WebView2Url, 'MicrosoftEdgeWebview2Setup.exe', '');
+    DownloadPage.Show;
+    try
+      try
+        DownloadPage.Download;
+        WebView2Downloaded := True;
+      except
+        WebView2Downloaded := False;
+        if not DownloadPage.AbortedByUser then
+          SuppressibleMsgBox('Le runtime Microsoft Edge WebView2 n''a pas pu être téléchargé.' + #13#10 +
+            'L''application sera installée, mais la visionneuse PDF de l''aide ne fonctionnera qu''après installation de WebView2 :' + #13#10 +
+            'https://developer.microsoft.com/microsoft-edge/webview2/', mbInformation, MB_OK, IDOK);
+      end;
+    finally
+      DownloadPage.Hide;
+    end;
+  end;
+end;

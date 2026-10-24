@@ -7,7 +7,7 @@
     <Nullable>disable</Nullable>
     <RootNamespace>ForthEditor</RootNamespace>
     <AssemblyName>ForthEditor</AssemblyName>
-    <NoWarn>$(NoWarn);WFO1000</NoWarn>
+    <NoWarn>$(NoWarn);WFO1000;MSB3277</NoWarn>
     <ApplicationIcon>ico1.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
@@ -47,5 +47,7 @@
     <Content Include="ico1.ico" />
     <!-- PDF de l'aide : copiés dans <exe>\doc -->
     <None Update="doc\**\*.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <!-- Visionneuse PDF.js : copiée dans <exe>\pdfjs -->
+    <None Update="pdfjs\**" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
