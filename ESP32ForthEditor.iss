@@ -18,7 +18,7 @@ AppVersion={#MyAppVersion}
 ;AppVerName={cm:NameAndVersion,{#EscapeConstArgument(MyAppName)},{#EscapeConstArgument(MyAppVersion)}}
 AppPublisher={#MyAppPublisher}
 DefaultDirName={autopf}\{#MyAppName}
-UninstallDisplayIcon={app}\{#MyAppExeName}
+UninstallDisplayIcon={app}\ico1.ico
 ; "ArchitecturesAllowed=x64compatible" specifies that Setup cannot run on anything but x64 and Windows 11 on Arm.
 ArchitecturesAllowed=x64compatible
 ; "ArchitecturesInstallIn64BitMode=x64compatible" requests that the install be done in "64-bit mode" on x64 or Windows 11 on Arm.
@@ -28,6 +28,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 ;SetupArchitecture=x64
 DisableProgramGroupPage=yes
 LicenseFile=G:\ES32ForthEditerm\LICENSE
+SetupIconFile=G:\ES32ForthEditerm\ico1.ico
 ; Uncomment the following line to run in non administrative install mode (install for current user only).
 ;PrivilegesRequired=lowest
 OutputBaseFilename=ESP32ForthEditerm
@@ -58,6 +59,7 @@ Source: "G:\ES32ForthEditerm\*.iss"; DestDir: "{app}\source"; Flags: ignoreversi
 
 Source: "G:\ES32ForthEditerm\syntaxes\*.json";DestDir: "{app}\syntaxes"; Flags: ignoreversion
 Source: "G:\ES32ForthEditerm\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
+Source: "G:\ES32ForthEditerm\ico1.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "G:\ES32ForthEditerm\pdfjs\*"; DestDir: "{app}\pdfjs"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "G:\ES32ForthEditerm\doc\*.pdf"; DestDir: "{app}\doc"; Flags: ignoreversion skipifsourcedoesntexist
 
@@ -66,10 +68,12 @@ Source: "G:\ES32ForthEditerm\doc\*.pdf"; DestDir: "{app}\doc"; Flags: ignorevers
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files.
 
 [Icons]
-Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\ico1.ico"
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\ico1.ico"; Tasks: desktopicon
 
 [Run]
+; Rafraîchit le cache d'icônes de Windows (évite d'afficher l'ancienne icône)
+Filename: "{sys}\ie4uinit.exe"; Parameters: "-show"; Flags: runhidden waituntilterminated skipifdoesntexist
 ; Runtime Edge WebView2 (visionneuse PDF) : installé seulement s'il manquait et a pu être téléchargé
 Filename: "{tmp}\MicrosoftEdgeWebview2Setup.exe"; Parameters: "/silent /install"; StatusMsg: "Installation du runtime Microsoft Edge WebView2..."; Flags: waituntilterminated; Check: WebView2ToInstall
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#DoubleAmp(MyAppName)}}"; Flags: nowait postinstall skipifsilent

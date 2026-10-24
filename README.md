@@ -2,6 +2,8 @@
 
 Éditeur de code **Forth** pour Windows (C# / .NET 10, Windows Forms), avec terminal série pour **ESP32Forth**.
 
+![Capture d'écran de ForthEditor](ecran.png)
+
 ## Fonctions
 - Plusieurs fichiers en onglets, numérotation des lignes, coloration syntaxique configurable (fichiers JSON dans `syntaxes`, un par extension)
 - Recherche / remplacement, repliement du code, plan des définitions, autocomplétion, réindentation du code Forth
