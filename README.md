@@ -20,6 +20,9 @@ Ouvrir `ForthEditor.slnx` dans Visual Studio, ou lancer `build.bat` : compilatio
 
 Le **numéro de version** se change à un seul endroit : `<Version>` dans `ForthEditor.csproj`. Il est repris par la fenêtre *À propos*, par le nom des fichiers générés et par Inno Setup.
 
+## Icônes
+Les icônes des menus et de la barre d'outils (dossier `icons`, PNG 64 px) sont embarquées dans l'exécutable. Elles sont générées par `tools/make_icons.py` (Python + Pillow : `python tools/make_icons.py icons`).
+
 ## Documentation PDF
 Placer les fichiers PDF dans le sous-dossier `doc` de l'application, ou choisir un autre dossier dans le menu *Aide*.
 

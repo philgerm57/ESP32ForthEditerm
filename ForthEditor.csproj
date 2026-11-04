@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ico1.ico" />
+    <!-- Icônes des menus et de la barre d'outils : ressources « icons.nom.png » -->
+    <EmbeddedResource Include="icons\*.png" LogicalName="icons.%(Filename)%(Extension)" />
     <!-- PDF de l'aide : copiés dans <exe>\doc -->
     <None Update="doc\**\*.pdf" CopyToOutputDirectory="PreserveNewest" />
     <!-- Visionneuse PDF.js : copiée dans <exe>\pdfjs -->

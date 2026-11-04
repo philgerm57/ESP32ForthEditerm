@@ -41,6 +41,7 @@ public partial class MainForm : Form
         InitPanels();
         InitProject();
         RebuildRecentMenu();
+        Load += (s, e) => InitIcons();     // icônes des menus + barre d'outils (MainForm.Icons.cs)
     }
 
     // ================= Fenêtre =================
