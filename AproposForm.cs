@@ -14,11 +14,10 @@ namespace ForthEditor
 {
     public partial class AproposForm : Form
     {
-        private string _Version = "2.4"; 
         public AproposForm()
         {
             InitializeComponent();
-            lblVersion.Text = _Version;
+            lblVersion.Text = AppInfo.Version;
             listBox1.Items.AddRange(new object[] {
 
                 "Licence : GNU General Public License version 3 (GPLv3)",

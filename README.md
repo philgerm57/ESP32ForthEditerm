@@ -16,7 +16,9 @@
 - Runtime [Microsoft Edge WebView2](https://developer.microsoft.com/microsoft-edge/webview2/) (l'installateur le fournit si besoin)
 
 ## Compilation
-Ouvrir `ForthEditor.slnx` dans Visual Studio, ou lancer `build.bat` (compilation, publication, puis installateur avec Inno Setup).
+Ouvrir `ForthEditor.slnx` dans Visual Studio, ou lancer `build.bat` : compilation, publication, archive zip portable, installateur (Inno Setup) et sommes SHA-256, le tout dans le dossier `Output`.
+
+Le **numéro de version** se change à un seul endroit : `<Version>` dans `ForthEditor.csproj`. Il est repris par la fenêtre *À propos*, par le nom des fichiers générés et par Inno Setup.
 
 ## Documentation PDF
 Placer les fichiers PDF dans le sous-dossier `doc` de l'application, ou choisir un autre dossier dans le menu *Aide*.

@@ -3,9 +3,20 @@
 ; Non-commercial use only.
 
 #define MyAppName "ESP32ForthEditerm"
-#define MyAppVersion "2.4"
 #define MyAppPublisher "germain PHILIPPE"
 #define MyAppExeName "ForthEditor.exe"
+; ---- Version : source unique = <Version> de ForthEditor.csproj ----
+; Elle est relue dans l'executable publie (bin\Release\...\publish\win-x64), donc il suffit de la changer
+; dans le .csproj puis de lancer build.bat.
+#ifndef MyAppVersion
+  #define PublishedExe SourcePath + "bin\Release\net10.0-windows\publish\win-x64\" + MyAppExeName
+  #define VerRaw GetVersionNumbersString(PublishedExe) + "|"
+  #define VerA StringChange(VerRaw, ".0|", "|")
+  #define VerB StringChange(VerA, ".0|", "|")
+  #define MyAppVersion StringChange(VerB, "|", "")
+#endif
+; Version utilisable dans un nom de fichier : 2.4 -> 2_4
+#define MyAppVersionFile StringChange(MyAppVersion, ".", "_")
 #define DoubleAmp(Value) StringChange(Value, "&", "&&")
 #define EscapeConstArgument(Value) StringChange(StringChange(StringChange(Value, "%", "%25"), ",", "%2c"), "}", "%7d")
 
@@ -27,11 +38,11 @@ ArchitecturesInstallIn64BitMode=x64compatible
 ; Uncomment the following line to use a 64-bit installer.
 ;SetupArchitecture=x64
 DisableProgramGroupPage=yes
-LicenseFile=G:\ES32ForthEditerm\LICENSE
-SetupIconFile=G:\ES32ForthEditerm\ico1.ico
+LicenseFile=G:\ESP32ForthEditerm\LICENSE
+SetupIconFile=G:\ESP32ForthEditerm\ico1.ico
 ; Uncomment the following line to run in non administrative install mode (install for current user only).
 ;PrivilegesRequired=lowest
-OutputBaseFilename=ESP32ForthEditerm
+OutputBaseFilename=ESP32ForthEditerm_{#MyAppVersionFile}
 SolidCompression=yes
 WizardStyle=modern dynamic
 
@@ -44,24 +55,24 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 
-Source: "G:\ES32ForthEditerm\bin\Release\net10.0-windows\publish\win-x64\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\ES32ForthEditerm\bin\Release\net10.0-windows\publish\win-x64\*.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\ES32ForthEditerm\bin\Release\net10.0-windows\publish\win-x64\*.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\bin\Release\net10.0-windows\publish\win-x64\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\bin\Release\net10.0-windows\publish\win-x64\*.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\bin\Release\net10.0-windows\publish\win-x64\*.dll"; DestDir: "{app}"; Flags: ignoreversion
 
-Source: "G:\ES32ForthEditerm\*.user"; DestDir: "{app}\source"; Flags: ignoreversion
-Source: "G:\ES32ForthEditerm\*.cs"; DestDir: "{app}\source"; Flags: ignoreversion
-Source: "G:\ES32ForthEditerm\*.ico"; DestDir: "{app}\source"; Flags: ignoreversion
-Source: "G:\ES32ForthEditerm\*.csproj"; DestDir: "{app}\source"; Flags: ignoreversion
-Source: "G:\ES32ForthEditerm\*.resx"; DestDir: "{app}\source"; Flags: ignoreversion
-Source: "G:\ES32ForthEditerm\*.sln"; DestDir: "{app}\source"; Flags: ignoreversion
-Source: "G:\ES32ForthEditerm\*.csproj"; DestDir: "{app}\source"; Flags: ignoreversion
-Source: "G:\ES32ForthEditerm\*.iss"; DestDir: "{app}\source"; Flags: ignoreversion
-
-Source: "G:\ES32ForthEditerm\syntaxes\*.json";DestDir: "{app}\syntaxes"; Flags: ignoreversion
-Source: "G:\ES32ForthEditerm\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\ES32ForthEditerm\ico1.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\ES32ForthEditerm\pdfjs\*"; DestDir: "{app}\pdfjs"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "G:\ES32ForthEditerm\doc\*.pdf"; DestDir: "{app}\doc"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "G:\ESP32ForthEditerm\*.user"; DestDir: "{app}\source"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\*.cs"; DestDir: "{app}\source"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\*.ico"; DestDir: "{app}\source"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\*.csproj"; DestDir: "{app}\source"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\*.resx"; DestDir: "{app}\source"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\*.sln"; DestDir: "{app}\source"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\*.csproj"; DestDir: "{app}\source"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\*.iss"; DestDir: "{app}\source"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\*.bat"; DestDir: "{app}\source"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\syntaxes\*.json";DestDir: "{app}\syntaxes"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\ico1.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "G:\ESP32ForthEditerm\pdfjs\*"; DestDir: "{app}\pdfjs"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "G:\ESP32ForthEditerm\doc\*.pdf"; DestDir: "{app}\doc"; Flags: ignoreversion skipifsourcedoesntexist
 
 
 

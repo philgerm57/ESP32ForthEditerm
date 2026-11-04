@@ -9,6 +9,11 @@
     <AssemblyName>ForthEditor</AssemblyName>
     <NoWarn>$(NoWarn);WFO1000;MSB3277</NoWarn>
     <ApplicationIcon>ico1.ico</ApplicationIcon>
+    <!-- Numéro de version : SOURCE UNIQUE (affiché dans À propos, lu par Inno Setup et build.bat) -->
+    <Version>2.4.1</Version>
+    <Product>ForthEditor</Product>
+    <Copyright>Copyright (C) 2026 Germain PHILIPPE</Copyright>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
   <ItemGroup>
     <!-- Nécessaire pour System.IO.Ports (SerialPort) sur .NET moderne -->
